@@ -133,8 +133,8 @@ class PairwiseRegistration(_PairwiseRegistration):
                 self.loss
             except:
                 self.loss=inf
-
-                self.loss_history =[]
+        
+        self.loss_history = []
 
         for iter_index in range(self._number_of_iterations):
             if self._verbose:
