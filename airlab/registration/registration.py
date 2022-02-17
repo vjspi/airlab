@@ -140,7 +140,7 @@ class PairwiseRegistration(_PairwiseRegistration):
             if self._verbose:
                 print(str(iter_index) + " ", end='', flush=True)
             loss = self._optimizer.step(self._closure)
-            self.loss_history.append(loss)
+            self.loss_history.append(loss.item())
             if EarlyStopping:
                 if loss < self.loss:
                     n = 0
