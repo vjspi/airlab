@@ -84,6 +84,10 @@ class _PairwiseImageLoss(th.nn.modules.Module):
                 mask = th.where(((self._warped_moving_mask == 0) | (self._fixed_mask == 0)), th.zeros_like(mask), mask)
             else:
                 mask = th.where((self._warped_moving_mask == 0), th.zeros_like(mask), mask)
+        
+        # if only fixed image mask is available:
+        if not self._fixed_mask is None:
+            mask = th.where((self._fixed_mask == 0), th.zeros_like(mask), mask)
 
         return mask
 
