@@ -586,6 +586,26 @@ class _KernelTransformation(_Transformation):
         size = [1, 1] + self._image_size.astype(dtype=int).tolist()
         self._displacement = th.empty(*size, dtype=self._dtype, device=self._device)
 
+        ## Store coordinates of cp grid in image size
+        # displacement_tmp size covers all cp points, including those outside of the original image
+        ## Currently only 2D!
+        cp_grid_x_temp = np.arange(0, self._displacement_tmp.shape[2], self._stride[0])
+        cp_grid_y_temp = np.arange(0, self._displacement_tmp.shape[3], self._stride[1])
+        self.cp_grid_x, self.cp_grid_y = np.meshgrid(cp_grid_x_temp, cp_grid_y_temp)
+
+        # Mark all control points in grid
+        self._cp_mask_tmp = th.zeros(self._displacement_tmp.shape, dtype=th.bool, device=self._device)
+        self._cp_mask_tmp[0,0,self.cp_grid_x,self.cp_grid_y] = True
+
+        self._cp_mask = self._cp_mask_tmp[:, :,
+                       self._stride[0] + self._crop_start[0]:-self._stride[0] - self._crop_end[0],
+                       self._stride[1] + self._crop_start[1]:-self._stride[1] - self._crop_end[1]]
+
+        # self._cp_mask = th.squeeze(self._cp_mask_tmp[:, :,
+        #                self._stride[0] + self._crop_start[0]:-self._stride[0] - self._crop_end[0],
+        #                self._stride[1] + self._crop_start[1]:-self._stride[1] - self._crop_end[1]].transpose_(1, 3).transpose(1, 2))
+
+
     def _compute_flow_2d(self):
         displacement_tmp = F.conv_transpose2d(self.trans_parameters, self._kernel,
                                           padding=self._padding, stride=self._stride, groups=2)
