@@ -12,5 +12,5 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from airlab.loss import pairwise
+from airlab.airlab.loss import pairwise
 

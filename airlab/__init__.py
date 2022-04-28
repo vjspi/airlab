@@ -12,8 +12,23 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import os
+import sys
+
+# sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), "/airlab/airlab"))
+# print(sys.path)
+
+# # os.chdir('airlab/airlab')
+# cwd = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# print(cwd)
+# sys.path.append(os.path.join(cwd))
+# # sys.path.append(os.path.join(cwd, 'airlab'))
+# os.chdir(cwd)
+# print(os.getcwd())
+# print(sys.path)
+
 from .utils import *
-import airlab.transformation
-import airlab.loss
+import airlab.airlab.transformation
+import airlab.airlab.loss
 from .registration import *
-import airlab.regulariser
+import airlab.airlab.regulariser
