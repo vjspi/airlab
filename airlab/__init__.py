@@ -28,7 +28,10 @@ import sys
 # print(sys.path)
 
 from .utils import *
-import airlab.airlab.transformation
-import airlab.airlab.loss
+from .transformation import *
+# import airlab.airlab.transformation
+from .loss import *
+# import airlab.airlab.loss
 from .registration import *
-import airlab.airlab.regulariser
+from .regulariser import *
+# import airlab.airlab.regulariser
